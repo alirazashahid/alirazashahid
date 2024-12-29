@@ -1,91 +1,76 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="images/logo.png" type="image/png">
     <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
-    <title>Search Results</title>
+
+    <title>Moviezoon</title>
     <style>
-        /* General Styling */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-        h1 {
-            text-align: center;
-            margin: 20px 0;
-        }
-        .gallery {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            padding: 20px;
-            justify-content: center;
-        }
-        .frame {
-            width: 300px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-        .frame:hover {
-            transform: scale(1.05);
-        }
-        .frame img {
+        /* Popup and overlay styling */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: auto;
-            display: block;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 9998;
+            display: none;
+            border-radius: 0px;
         }
-        .frame .title {
-            padding: 10px;
-            text-align: center;
-            font-size: 16px;
-            font-weight: bold;
-            color: #333;
-        }
-        /* Request Form Styling */
-        .request-form {
-            margin: 50px auto;
-            padding: 20px;
-            max-width: 500px;
-            background-color: #f9f9f9;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        .request-form h2 {
-            text-align: center;
-            color: #2f4ad0;
-            margin-bottom: 20px;
-        }
-        .request-form input, .request-form button {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-        .request-form button {
-            background-color: #2f4ad0;
-            color: #fff;
+
+      
+
+        .button-85 {
+            padding: 0.6em 2em;
             border: none;
+            outline: none;
+            color: rgb(255, 255, 255);
+            background: #111;
             cursor: pointer;
+            position: relative;
+            z-index: 0;
+            border-radius: 10px;
         }
-        .request-form button:hover {
-            background-color: #1c3586;
+
+        .button-85:before {
+            content: "";
+            background: linear-gradient(
+                45deg,
+                #ff0000,
+                #ff7300,
+                #fffb00,
+                #48ff00,
+                #00ffd5,
+                #002bff,
+                #7a00ff,
+                #ff00c8,
+                #ff0000
+            );
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            background-size: 400%;
+            z-index: -1;
+            filter: blur(5px);
+            width: calc(100% + 4px);
+            height: calc(100% + 4px);
+            animation: glowing-button-85 20s linear infinite;
+            border-radius: 10px;
         }
+
+     
+
     </style>
 </head>
 <body>
-    <!-- Navigation bar -->
+
     <nav class="navbar">
-        <!-- Logo -->
         <a href="index.html" style="text-decoration: none;">
             <div class="logo" title="Moviezoon">M</div>
         </a>
@@ -103,8 +88,8 @@
         const searchInput = document.getElementById('search-input').value.trim(); // Get the search input value
 
         if (searchInput) {
-            // Redirect to search.php with the query parameter
-            window.location.href = `search.php?query=${encodeURIComponent(searchInput)}`;
+            // Redirect to search.html with the query parameter
+            window.location.href = `search.html?query=${encodeURIComponent(searchInput)}`;
         } else {
             alert("Please enter a search term!"); // Show an alert if the search is empty
         }
@@ -118,11 +103,18 @@
     });
 </script>
 
-        <!-- Profile Icon -->
+
+        <div class="language-dropdown">
+            <button class="btn" onclick="window.location.href='urdu.html'">Urdu</button>
+            <button class="btn" onclick="window.location.href='punjabi.html'">Punjabi</button>
+            <button class="btn" onclick="window.location.href='english.html'">English</button>
+            <button class="btn" onclick="window.location.href='hindi.html'">Hindi</button>
+            <button class="btn" onclick="window.location.href='h-dubbed.html'">H-Dubbed</button>
+        </div>
 
         <div class="profile" onclick="goToProfile()">
             <img src="Images/pf-pic.jpg" alt="Profile Picture">
-        </div>           
+        </div>
     </nav>
 
     <div class="sidebar">
@@ -131,65 +123,69 @@
         <a href="Liked.html" title="Liked" class="liked-img"></a>
     </div>
 
-    <h1 id="search-title"></h1>
-    <div class="gallery" id="search-results"></div>
+    <div id="excel_data" class="gallery">
+    </div>
 
+    <div>
+        <h5>
+            Moviezooooooooooooooon
+              </h5>
+    </div>
     <script>
-        function searchMovies() {
-            const searchInput = document.getElementById('search-input').value.trim();
-            if (searchInput) {
-                window.location.href = `search.html?query=${encodeURIComponent(searchInput)}`;
-            }
-        }
+// Function to shuffle the array in random order
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
 
-        function fetchSearchResults(query) {
-            fetch('videos.xlsx')
-                .then(response => response.arrayBuffer())
-                .then(data => {
-                    const workbook = XLSX.read(data, { type: 'array' });
-                    const sheetName = workbook.SheetNames[0];
-                    const sheetData = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { defval: '' });
+// Function to load and process the Excel file automatically
+function loadExcelFile(filePath) {
+    fetch('videos.xlsx')
+        .then(response => response.arrayBuffer())
+        .then(data => {
+            const workbook = XLSX.read(data, { type: 'array' });
+            const sheet_name = workbook.SheetNames[0];
+            const sheet_data = XLSX.utils.sheet_to_json(workbook.Sheets[sheet_name], { defval: '' });
 
-                    const results = sheetData.filter(row => row.title && row.title.toLowerCase().includes(query.toLowerCase()));
+            if (sheet_data.length > 0) {
+                // Filter rows where the language is Punjabi
+                const filteredData = sheet_data.filter(row => row['language'] === 'Punjabi');
 
-                    if (results.length > 0) {
-                        const gallery = document.getElementById('search-results');
-                        gallery.innerHTML = results.map(video => `
-                            <div class="frame" onclick="window.location.href='video.html?vpcode=${video.vpcode}'">
-                                <img src="${video.image_url || 'https://via.placeholder.com/300'}" alt="${video.title}">
-                                <div class="title">${video.title}</div>
-                            </div>
-                        `).join('');
-                    } else {
-                        document.getElementById('search-results').innerHTML = `
-                            <p style="text-align: center; color: gray;">No results found. Please request the film below.</p>
-                            <div class="request-form">
-                                <h2>Request the Film</h2>
-                                <form action="request_film.html" method="POST">
-                                    <input type="text" name="film_name" placeholder="Film Name" required>
-                                    <input type="email" name="email" placeholder="Your Email" required>
-                                    <button type="submit">Request Film</button>
-                                </form>
-                            </div>
-                        `;
-                    }
-                })
-                .catch(error => {
-                    console.error("Error fetching data:", error);
+                // Shuffle the filtered data
+                const shuffledData = shuffleArray(filteredData);
+
+                let output = '';
+                shuffledData.forEach((row, index) => {
+                    const imagePath = row['image_url'] || 'https://via.placeholder.com/300';
+                    const title = row['title'] || `Untitled (Row ${index + 1})`;
+
+                    output += `
+                        <div class="frame" onclick="window.location.href='video.html?vpcode=${row['vpcode']}'">
+                            <img src="${imagePath}" alt="${title}">
+                            <div class="title">${title}</div>
+                        </div>`;
                 });
-        }
 
-        // Load search results on page load
-        document.addEventListener('DOMContentLoaded', () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const query = urlParams.get('query');
-            if (query) {
-                document.getElementById('search-title').innerText = `Search Results for "${query}"`;
-                fetchSearchResults(query);
+                document.getElementById('excel_data').innerHTML = output;
             } else {
-                document.getElementById('search-title').innerText = "Please enter a search query.";
+                document.getElementById('excel_data').innerHTML = 
+                '<div class="alert alert-warning">No data found in the Excel file</div>';
             }
+        })
+        .catch(error => {
+            document.getElementById('excel_data').innerHTML = 
+            `<div class="alert alert-danger">Error loading file: ${error.message}</div>`;
         });
-    </script>
+}
+
+// Load videos.xlsx automatically on page load
+window.onload = () => {
+    loadExcelFile('videos.xlsx');
+};
+</script>
+
 </body>
 </html>
