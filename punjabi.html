@@ -1,0 +1,195 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+    <title>Search Results</title>
+    <style>
+        /* General Styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 20px;
+            justify-content: center;
+        }
+        .frame {
+            width: 300px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .frame:hover {
+            transform: scale(1.05);
+        }
+        .frame img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .frame .title {
+            padding: 10px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+        }
+        /* Request Form Styling */
+        .request-form {
+            margin: 50px auto;
+            padding: 20px;
+            max-width: 500px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .request-form h2 {
+            text-align: center;
+            color: #2f4ad0;
+            margin-bottom: 20px;
+        }
+        .request-form input, .request-form button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .request-form button {
+            background-color: #2f4ad0;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        .request-form button:hover {
+            background-color: #1c3586;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation bar -->
+    <nav class="navbar">
+        <!-- Logo -->
+        <a href="index.html" style="text-decoration: none;">
+            <div class="logo" title="Moviezoon">M</div>
+        </a>
+        <div class="search-bar">
+    <input id="search-input" type="text" placeholder="Search...">
+    <button onclick="searchMovies()">
+        <div class="search-icon">
+            <i class="fas fa-search"></i>
+        </div>
+    </button>
+</div>
+
+<script>
+    function searchMovies() {
+        const searchInput = document.getElementById('search-input').value.trim(); // Get the search input value
+
+        if (searchInput) {
+            // Redirect to search.php with the query parameter
+            window.location.href = `search.php?query=${encodeURIComponent(searchInput)}`;
+        } else {
+            alert("Please enter a search term!"); // Show an alert if the search is empty
+        }
+    }
+
+    // Trigger search when Enter key is pressed
+    document.getElementById('search-input').addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+            searchMovies(); // Call the searchMovies function on Enter
+        }
+    });
+</script>
+
+        <!-- Profile Icon -->
+
+        <div class="profile" onclick="goToProfile()">
+            <img src="Images/pf-pic.jpg" alt="Profile Picture">
+        </div>           
+    </nav>
+
+    <div class="sidebar">
+        <a href="playlist.html" title="Playlist" class="playlist-img"></a>
+        <a href="Watched.html" title="Just Watched" class="justwatched-img"></a>
+        <a href="Liked.html" title="Liked" class="liked-img"></a>
+    </div>
+
+    <h1 id="search-title"></h1>
+    <div class="gallery" id="search-results"></div>
+
+    <script>
+        function searchMovies() {
+            const searchInput = document.getElementById('search-input').value.trim();
+            if (searchInput) {
+                window.location.href = `search.html?query=${encodeURIComponent(searchInput)}`;
+            }
+        }
+
+        function fetchSearchResults(query) {
+            fetch('videos.xlsx')
+                .then(response => response.arrayBuffer())
+                .then(data => {
+                    const workbook = XLSX.read(data, { type: 'array' });
+                    const sheetName = workbook.SheetNames[0];
+                    const sheetData = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { defval: '' });
+
+                    const results = sheetData.filter(row => row.title && row.title.toLowerCase().includes(query.toLowerCase()));
+
+                    if (results.length > 0) {
+                        const gallery = document.getElementById('search-results');
+                        gallery.innerHTML = results.map(video => `
+                            <div class="frame" onclick="window.location.href='video.html?vpcode=${video.vpcode}'">
+                                <img src="${video.image_url || 'https://via.placeholder.com/300'}" alt="${video.title}">
+                                <div class="title">${video.title}</div>
+                            </div>
+                        `).join('');
+                    } else {
+                        document.getElementById('search-results').innerHTML = `
+                            <p style="text-align: center; color: gray;">No results found. Please request the film below.</p>
+                            <div class="request-form">
+                                <h2>Request the Film</h2>
+                                <form action="request_film.html" method="POST">
+                                    <input type="text" name="film_name" placeholder="Film Name" required>
+                                    <input type="email" name="email" placeholder="Your Email" required>
+                                    <button type="submit">Request Film</button>
+                                </form>
+                            </div>
+                        `;
+                    }
+                })
+                .catch(error => {
+                    console.error("Error fetching data:", error);
+                });
+        }
+
+        // Load search results on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const query = urlParams.get('query');
+            if (query) {
+                document.getElementById('search-title').innerText = `Search Results for "${query}"`;
+                fetchSearchResults(query);
+            } else {
+                document.getElementById('search-title').innerText = "Please enter a search query.";
+            }
+        });
+    </script>
+</body>
+</html>
