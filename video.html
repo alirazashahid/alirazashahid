@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <link rel="icon" href="images/logo.png" type="image/png">
+    <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+    <title>Moviezoon - Video Player</title>
+    <style>
+        .video-container {
+            display: flex;
+            justify-content: center;
+            padding-top: 65px;
+            width: 830px;
+            max-width: 910px;
+            aspect-ratio: 16 / 9;
+        }
+
+        .video-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            aspect-ratio: 16 / 9;
+        }
+
+        .title-bar {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .description-box {
+            margin: 20px auto;
+            max-width: 800px;
+            text-align: center;
+        }
+
+        .description-box p {
+            font-size: 16px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <a href="index.html" style="text-decoration: none;">
+        <div class="logo" title="Moviezoon">M</div>
+    </a>
+    <div class="search-bar">
+    <input id="search-input" type="text" placeholder="Search...">
+    <button onclick="searchMovies()">
+        <div class="search-icon">
+            <i class="fas fa-search"></i>
+        </div>
+    </button>
+</div>
+
+<script>
+    function searchMovies() {
+        const searchInput = document.getElementById('search-input').value.trim(); // Get the search input value
+
+        if (searchInput) {
+            // Redirect to search.php with the query parameter
+            window.location.href = `search.html?query=${encodeURIComponent(searchInput)}`;
+        } else {
+            alert("Please enter a search term!"); // Show an alert if the search is empty
+        }
+    }
+
+    // Trigger search when Enter key is pressed
+    document.getElementById('search-input').addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+            searchMovies(); // Call the searchMovies function on Enter
+        }
+    });
+</script>
+
+
+    <div class="language-dropdown">
+        <button class="btn" onclick="window.location.href='urdu.html'">Urdu</button>
+        <button class="btn" onclick="window.location.href='punjabi.html'">Punjabi</button>
+        <button class="btn" onclick="window.location.href='english.html'">English</button>
+        <button class="btn" onclick="window.location.href='hindi.html'">Hindi</button>
+        <button class="btn" onclick="window.location.href='h-dubbed.html'">H-Dubbed</button>
+    </div>
+    
+    <div class="profile" onclick="goToProfile()">
+            <img src="Images/pf-pic.jpg" alt="Profile Picture">
+        </div>
+</nav>
+
+<div class="sidebar">
+        <a href="playlist.php" title="Playlist" class="playlist-img"></a>
+        <a href="Watched.php" title="Just Watched" class="justwatched-img"></a>
+        <a href="Liked.php" title="Liked" class="liked-img"></a>
+    </div>
+<div class="video-container" id="video-container">
+    <p>Loading video...</p>
+</div>
+
+<div class="title-bar" id="video-title"></div>
+
+<div class="description-box">
+    <p id="video-description">Loading description...</p>
+</div>
+
+<script>
+    // Function to get URL parameters
+    function getQueryParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param);
+    }
+
+    // Function to load and process the Excel file
+    function loadVideoDetails(filePath, vpcode) {
+        fetch(filePath)
+            .then(response => response.arrayBuffer())
+            .then(data => {
+                const workbook = XLSX.read(data, { type: 'array' });
+                const sheet_name = workbook.SheetNames[0];
+                const sheet_data = XLSX.utils.sheet_to_json(workbook.Sheets[sheet_name], { defval: '' });
+
+                // Find the row matching the given vpcode
+                const videoRow = sheet_data.find(row => row['vpcode'] === vpcode);
+
+                if (videoRow) {
+                    const videoLink = videoRow['link'];
+                    const videoTitle = videoRow['title'] || 'Unknown Title';
+                    const videoDescription = videoRow['description'] || 'No description available.';
+
+                    // Update video player
+                    const videoContainer = document.getElementById('video-container');
+                    if (videoLink.includes('ok.ru/video/')) {
+                        // Embed format for OK.ru
+                        const videoID = videoLink.match(/ok\.ru\/video\/(\d+)/)?.[1];
+                        const embedLink = videoID ? `//ok.ru/videoembed/${videoID}?nochat=1` : videoLink;
+                        videoContainer.innerHTML = `<iframe src="${embedLink}" frameborder="0" allow="autoplay" allowfullscreen></iframe>`;
+                    } else {
+                        videoContainer.innerHTML = `<iframe src="${videoLink}" frameborder="0" allow="autoplay" allowfullscreen></iframe>`;
+                    }
+
+                    // Update title and description
+                    document.getElementById('video-title').textContent = videoTitle;
+                    document.getElementById('video-description').textContent = videoDescription;
+                } else {
+                    // Show error if video is not found
+                    document.getElementById('video-container').innerHTML = `<p>Video not found!</p>`;
+                    document.getElementById('video-title').textContent = 'Error';
+                    document.getElementById('video-description').textContent = 'Video details not found in the file.';
+                }
+            })
+            .catch(error => {
+                console.error('Error loading Excel file:', error);
+                document.getElementById('video-container').innerHTML = `<p>Error loading video data.</p>`;
+            });
+    }
+
+    // On page load, fetch video details
+    window.onload = () => {
+        const vpcode = getQueryParam('vpcode');
+        if (vpcode) {
+            loadVideoDetails('videos.xlsx', vpcode);
+        } else {
+            document.getElementById('video-container').innerHTML = `<p>Video code not provided!</p>`;
+        }
+    };
+</script>
+
+</body>
+</html>
