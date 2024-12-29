@@ -88,7 +88,7 @@
         const searchInput = document.getElementById('search-input').value.trim(); // Get the search input value
 
         if (searchInput) {
-            // Redirect to search.php with the query parameter
+            // Redirect to search.html with the query parameter
             window.location.href = `search.html?query=${encodeURIComponent(searchInput)}`;
         } else {
             alert("Please enter a search term!"); // Show an alert if the search is empty
@@ -161,7 +161,7 @@ function loadExcelFile(filePath) {
                     const title = row['title'] || `Untitled (Row ${index + 1})`;
 
                     output += `
-                        <div class="frame" onclick="window.location.href='video.php?vpcode=${row['vpcode']}'">
+                        <div class="frame" onclick="window.location.href='video.html?vpcode=${row['vpcode']}'">
                             <img src="${imagePath}" alt="${title}">
                             <div class="title">${title}</div>
                         </div>`;
