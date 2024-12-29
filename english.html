@@ -112,6 +112,24 @@
             <button class="btn" onclick="window.location.href='h-dubbed.html'">H-Dubbed</button>
         </div>
 
+ <!-- Language Dropdown for Mobile -->
+ <div class="mobile-language-dropdown">
+            <button class="btn dropdown-toggle" onclick="toggleDropdown()">Language</button>
+            <div class="dropdown-content" id="dropdown-content">
+                <a href="urdu.html">Urdu</a>
+                <a href="punjabi.html">Punjabi</a>
+                <a href="english.html">English</a>
+                <a href="hindi.html">Hindi</a>
+                <a href="h-dubbed.html">H-Dubbed</a>
+            </div>
+        </div>
+        <script>
+        function toggleDropdown() {
+            const dropdown = document.getElementById('dropdown-content');
+            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+        }
+    </script>
+
         <div class="profile" onclick="goToProfile()">
             <img src="Images/pf-pic.jpg" alt="Profile Picture">
         </div>
