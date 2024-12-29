@@ -16,6 +16,8 @@
             width: 830px;
             max-width: 910px;
             aspect-ratio: 16 / 9;
+            box-sizing: border-box; /* Ensures padding doesn't affect the overall width */
+
         }
 
         .video-container iframe {
@@ -24,6 +26,16 @@
             border: none;
             aspect-ratio: 16 / 9;
         }
+
+/* Add media query for mobile screens */
+@media (max-width: 768px) {
+    .video-container {
+        width: 100%; /* Ensures the container takes full width on smaller screens */
+        max-width: 100%; /* Prevents exceeding screen width */
+        padding-left: 10px; /* Adds padding for a little space on smaller screens */
+        padding-right: 10px;
+    }
+}
 
         .title-bar {
             font-size: 24px;
