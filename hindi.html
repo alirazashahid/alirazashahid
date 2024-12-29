@@ -91,7 +91,7 @@
 
         if (searchInput) {
             // Redirect to search.php with the query parameter
-            window.location.href = `search.html?query=${encodeURIComponent(searchInput)}`;
+            window.location.href = `search?query=${encodeURIComponent(searchInput)}`;
         } else {
             alert("Please enter a search term!"); // Show an alert if the search is empty
         }
@@ -108,11 +108,11 @@
 
 
         <div class="language-dropdown">
-            <button class="btn" onclick="window.location.href='urdu.html'">Urdu</button>
-            <button class="btn" onclick="window.location.href='punjabi.html'">Punjabi</button>
-            <button class="btn" onclick="window.location.href='english.html'">English</button>
-            <button class="btn" onclick="window.location.href='hindi.html'">Hindi</button>
-            <button class="btn" onclick="window.location.href='h-dubbed.html'">H-Dubbed</button>
+            <button class="btn" onclick="window.location.href='urdu'">Urdu</button>
+            <button class="btn" onclick="window.location.href='punjabi'">Punjabi</button>
+            <button class="btn" onclick="window.location.href='english'">English</button>
+            <button class="btn" onclick="window.location.href='hindi'">Hindi</button>
+            <button class="btn" onclick="window.location.href='h-dubbed'">H-Dubbed</button>
         </div>
 
         <div class="profile" onclick="goToProfile()">
@@ -121,9 +121,9 @@
     </nav>
 
     <div class="sidebar">
-        <a href="playlist.html" title="Playlist" class="playlist-img"></a>
-        <a href="Watched.html" title="Just Watched" class="justwatched-img"></a>
-        <a href="Liked.html" title="Liked" class="liked-img"></a>
+        <a href="playlist" title="Playlist" class="playlist-img"></a>
+        <a href="Watched" title="Just Watched" class="justwatched-img"></a>
+        <a href="Liked" title="Liked" class="liked-img"></a>
     </div>
 
     <div id="excel_data" class="gallery">
