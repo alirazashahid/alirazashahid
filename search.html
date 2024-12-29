@@ -126,9 +126,9 @@
     </nav>
 
     <div class="sidebar">
-        <a href="playlist.html" title="Playlist" class="playlist-img"></a>
-        <a href="Watched.html" title="Just Watched" class="justwatched-img"></a>
-        <a href="Liked.html" title="Liked" class="liked-img"></a>
+        <a href="playlist" title="Playlist" class="playlist-img"></a>
+        <a href="Watched" title="Just Watched" class="justwatched-img"></a>
+        <a href="Liked" title="Liked" class="liked-img"></a>
     </div>
 
     <h1 id="search-title"></h1>
@@ -138,7 +138,7 @@
         function searchMovies() {
             const searchInput = document.getElementById('search-input').value.trim();
             if (searchInput) {
-                window.location.href = `search.html?query=${encodeURIComponent(searchInput)}`;
+                window.location.href = `search?query=${encodeURIComponent(searchInput)}`;
             }
         }
 
@@ -155,7 +155,7 @@
                     if (results.length > 0) {
                         const gallery = document.getElementById('search-results');
                         gallery.innerHTML = results.map(video => `
-                            <div class="frame" onclick="window.location.href='video.html?vpcode=${video.vpcode}'">
+                            <div class="frame" onclick="window.location.href='video?vpcode=${video.vpcode}'">
                                 <img src="${video.image_url || 'https://via.placeholder.com/300'}" alt="${video.title}">
                                 <div class="title">${video.title}</div>
                             </div>
@@ -165,7 +165,7 @@
                             <p style="text-align: center; color: gray;">No results found. Please request the film below.</p>
                             <div class="request-form">
                                 <h2>Request the Film</h2>
-                                <form action="request_film.html" method="POST">
+                                <form action="request_film" method="POST">
                                     <input type="text" name="film_name" placeholder="Film Name" required>
                                     <input type="email" name="email" placeholder="Your Email" required>
                                     <button type="submit">Request Film</button>
