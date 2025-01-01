@@ -88,6 +88,27 @@
             </button>
         </div>
 
+<script>
+    function searchMovies() {
+        const searchInput = document.getElementById('search-input').value.trim(); // Get the search input value
+
+        if (searchInput) {
+            // Redirect to search.php with the query parameter
+            window.location.href = `search.php?query=${encodeURIComponent(searchInput)}`;
+        } else {
+            alert("Please enter a search term!"); // Show an alert if the search is empty
+        }
+    }
+
+    // Trigger search when Enter key is pressed
+    document.getElementById('search-input').addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+            searchMovies(); // Call the searchMovies function on Enter
+        }
+    });
+</script>
+
+
         <div class="language-dropdown">
             <button class="btn" onclick="window.location.href='urdu'">Urdu</button>
             <button class="btn" onclick="window.location.href='punjabi'">Punjabi</button>
