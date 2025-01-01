@@ -93,8 +93,8 @@
         const searchInput = document.getElementById('search-input').value.trim(); // Get the search input value
 
         if (searchInput) {
-            // Redirect to search.php with the query parameter
-            window.location.href = `search.php?query=${encodeURIComponent(searchInput)}`;
+            // Redirect to search with the query parameter
+            window.location.href = `search?query=${encodeURIComponent(searchInput)}`;
         } else {
             alert("Please enter a search term!"); // Show an alert if the search is empty
         }
