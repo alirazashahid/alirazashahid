@@ -19,7 +19,7 @@
     box-sizing: border-box; /* Ensures padding doesn't affect the overall width */
 }
 
-.video-container iframe {
+.video-container iframe, .video-container video {
     width: 100%;
     height: 100%;
     border: none;
@@ -144,14 +144,23 @@
                     const videoLink = videoRow['link'];
                     const videoTitle = videoRow['title'] || 'Unknown Title';
                     const videoDescription = videoRow['description'] || 'No description available.';
+                    const videoCategory = videoRow['category'];
 
                     // Update video player
                     const videoContainer = document.getElementById('video-container');
-                    if (videoLink.includes('ok.ru/video/')) {
+                    if (videoCategory === 'OKRU' && videoLink.includes('ok.ru/video/')) {
                         // Embed format for OK.ru
                         const videoID = videoLink.match(/ok\.ru\/video\/(\d+)/)?.[1];
                         const embedLink = videoID ? `//ok.ru/videoembed/${videoID}?nochat=1` : videoLink;
                         videoContainer.innerHTML = `<iframe src="${embedLink}" frameborder="0" allow="autoplay" allowfullscreen></iframe>`;
+                    } else if (videoCategory === 'USVP') {
+                        // Use video player for USVP category
+                        videoContainer.innerHTML = `
+                            <video controls autoplay>
+                                <source src="${videoLink}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        `;
                     } else {
                         videoContainer.innerHTML = `<iframe src="${videoLink}" frameborder="0" allow="autoplay" allowfullscreen></iframe>`;
                     }
