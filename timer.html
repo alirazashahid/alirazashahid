@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hello, World!</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        flex-direction: column;
+      }
+
+      .loader {
+        width: 60px;
+        aspect-ratio: 1;
+        color: #000;
+        border: 10px solid;
+        box-sizing: border-box;
+        border-radius: 50%;
+        animation: l6 10s linear;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: opacity 1s ease-out;
+      }
+      .loader:before {
+        content: "";
+        position: absolute;
+        height: 20px;
+        inset: auto calc(50% - 10px) 100%;
+        border-radius: 5px 5px 0 0;
+        background: 
+          linear-gradient(currentColor 0 0) top/100% 30%,
+          linear-gradient(currentColor 0 0) top/50% 100%;
+        background-repeat: no-repeat;
+      }
+      .loader:after {
+        content: "";
+        position: absolute;
+        inset: -8px -10px auto;
+        height: 15px;
+        background: 
+          radial-gradient(farthest-side,currentColor 94%,#0000) left,
+          radial-gradient(farthest-side,currentColor 94%,#0000) right;
+        background-size: 15px 15px;
+        background-repeat: no-repeat;
+      }
+      @keyframes l6 {
+        0%   {background: conic-gradient(#77a4bd 0     ,#0000 0)}
+        10%  {background: conic-gradient(#77a4bd 36deg ,#0000 37deg)}
+        20%  {background: conic-gradient(#77a4bd 72deg ,#0000 73deg)}
+        30%  {background: conic-gradient(#77a4bd 108deg,#0000 109deg)}
+        40%  {background: conic-gradient(#77a4bd 144deg,#0000 145deg)}
+        50%  {background: conic-gradient(#77a4bd 180deg,#0000 181deg)}
+        60%  {background: conic-gradient(#77a4bd 216deg,#0000 217deg)}
+        70%  {background: conic-gradient(#77a4bd 252deg,#0000 253deg)}
+        80%  {background: conic-gradient(#77a4bd 288deg,#0000 289deg)}
+        90%  {background: conic-gradient(#77a4bd 324deg,#0000 325deg)}
+        100% {background: conic-gradient(#77a4bd 360deg,#0000 360deg)}
+      }
+      .countdown {
+        font-size: 1.5rem;
+        position: absolute;
+        color: #000;
+      }
+      .fade-out {
+        opacity: 0;
+      }
+    </style>
+    <div class="loader" id="loader">
+      <div class="countdown" id="countdown">10</div>
+    </div>
+
+    <script>
+      let countdownElement = document.getElementById('countdown');
+      let loaderElement = document.getElementById('loader');
+      let countdown = 10;
+
+      const timer = setInterval(() => {
+        if (countdown > 1) {
+          countdown--;
+          countdownElement.textContent = countdown;
+        } else {
+          clearInterval(timer);
+          loaderElement.classList.add('fade-out');
+          setTimeout(() => {
+            loaderElement.style.display = 'none';
+          }, 1000); // Match this duration with the transition duration
+        }
+      }, 1000);
+    </script>
+  </body>
+</html>
