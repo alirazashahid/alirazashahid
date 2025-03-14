@@ -1,80 +1,107 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Hello, World!</title>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
+<head>
     <style>
-      body {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        margin: 0;
-        flex-direction: column;
-      }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: transparent;
+        }
 
-      .loader {
-        width: 60px;
-        aspect-ratio: 1;
-        color: #000;
-        border: 10px solid;
-        box-sizing: border-box;
-        border-radius: 50%;
-        animation: l6 10s linear;
-        position: relative;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        transition: opacity 1s ease-out;
-      }
-      .loader:before {
-        content: "";
-        position: absolute;
-        height: 20px;
-        inset: auto calc(50% - 10px) 100%;
-        border-radius: 5px 5px 0 0;
-        background: 
-          linear-gradient(currentColor 0 0) top/100% 30%,
-          linear-gradient(currentColor 0 0) top/50% 100%;
-        background-repeat: no-repeat;
-      }
-      .loader:after {
-        content: "";
-        position: absolute;
-        inset: -8px -10px auto;
-        height: 15px;
-        background: 
-          radial-gradient(farthest-side,currentColor 94%,#0000) left,
-          radial-gradient(farthest-side,currentColor 94%,#0000) right;
-        background-size: 15px 15px;
-        background-repeat: no-repeat;
-      }
-      @keyframes l6 {
-        0%   {background: conic-gradient(#77a4bd 0     ,#0000 0)}
-        10%  {background: conic-gradient(#77a4bd 36deg ,#0000 37deg)}
-        20%  {background: conic-gradient(#77a4bd 72deg ,#0000 73deg)}
-        30%  {background: conic-gradient(#77a4bd 108deg,#0000 109deg)}
-        40%  {background: conic-gradient(#77a4bd 144deg,#0000 145deg)}
-        50%  {background: conic-gradient(#77a4bd 180deg,#0000 181deg)}
-        60%  {background: conic-gradient(#77a4bd 216deg,#0000 217deg)}
-        70%  {background: conic-gradient(#77a4bd 252deg,#0000 253deg)}
-        80%  {background: conic-gradient(#77a4bd 288deg,#0000 289deg)}
-        90%  {background: conic-gradient(#77a4bd 324deg,#0000 325deg)}
-        100% {background: conic-gradient(#77a4bd 360deg,#0000 360deg)}
-      }
-      .countdown {
-        font-size: 1.5rem;
-        position: absolute;
-        color: #000;
-      }
-      .fade-out {
-        opacity: 0;
-      }
+        .box-container {
+            position: relative;
+            width: 320px; /* Increased width */
+            height: 320px; /* Increased height */
+        }
+
+        .blur-box {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2;
+        }
+
+        .svg-background {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            filter: drop-shadow(0 0 10px rgba(166, 55, 248, 0.7)) drop-shadow(0 0 20px rgba(37, 255, 126, 0.7));
+        }
+
+        /* Modified Timer Styles */
+        .loader {
+            width: 160px; /* Increased width */
+            aspect-ratio: 1;
+            color: white;
+            border: 10px solid;
+            box-sizing: border-box;
+            border-radius: 50%;
+            animation: l6 10s linear;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1s ease-out;
+        }
+
+        .countdown {
+            font-size: 3rem;
+            position: absolute;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        @keyframes l6 {
+            0%   {background: conic-gradient(#77a4bd 0     ,#0000 0)}
+            10%  {background: conic-gradient(#77a4bd 36deg ,#0000 37deg)}
+            20%  {background: conic-gradient(#77a4bd 72deg ,#0000 73deg)}
+            30%  {background: conic-gradient(#77a4bd 108deg,#0000 109deg)}
+            40%  {background: conic-gradient(#77a4bd 144deg,#0000 145deg)}
+            50%  {background: conic-gradient(#77a4bd 180deg,#0000 181deg)}
+            60%  {background: conic-gradient(#77a4bd 216deg,#0000 217deg)}
+            70%  {background: conic-gradient(#77a4bd 252deg,#0000 253deg)}
+            80%  {background: conic-gradient(#77a4bd 288deg,#0000 289deg)}
+            90%  {background: conic-gradient(#77a4bd 324deg,#0000 325deg)}
+            100% {background: conic-gradient(#77a4bd 360deg,#0000 360deg)}
+        }
+
+        .fade-out {
+            opacity: 0;
+        }
     </style>
-    <div class="loader" id="loader">
-      <div class="countdown" id="countdown">10</div>
+</head>
+<body>
+    <div class="box-container">
+        <div class="svg-background">
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="sw-gradient" x1="0" x2="1" y1="1" y2="0">
+                        <stop stop-color="rgba(166,55,248,1)" offset="0%"/>
+                        <stop stop-color="rgba(37,255,126,1)" offset="100%"/>
+                    </linearGradient>
+                </defs>
+                <path fill="url(#sw-gradient)" d="M13.2,-14.9C18.8,-11.1,26.1,-8.5,27.8,-4.1C29.5,0.2,25.6,6.4,21.9,12.7C18.3,19,15,25.6,10.2,26.6C5.5,27.7,-0.7,23.3,-9,21.6C-17.2,19.9,-27.6,20.9,-33.3,16.5C-39.1,12.1,-40.3,2.4,-36.8,-4.6C-33.4,-11.7,-25.2,-16,-18.3,-19.6C-11.4,-23.3,-5.7,-26.3,-0.9,-25.1C3.8,-24,7.6,-18.8,13.2,-14.9Z" 
+                      transform="translate(50 50)" stroke-width="0"/>
+            </svg>
+        </div>
+        
+        <div class="blur-box">
+            <div class="loader" id="loader">
+                <div class="countdown" id="countdown">10</div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -91,9 +118,9 @@
           loaderElement.classList.add('fade-out');
           setTimeout(() => {
             loaderElement.style.display = 'none';
-          }, 1000); // Match this duration with the transition duration
+          }, 1000);
         }
       }, 1000);
     </script>
-  </body>
+</body>
 </html>
