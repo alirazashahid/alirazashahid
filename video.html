@@ -163,23 +163,15 @@
                             const embedLink = videoID ? `//ok.ru/videoembed/${videoID}?nochat=1&autoplay=1` : videoLink;
                             videoContainer.innerHTML = `<iframe src="${embedLink}" frameborder="0" allow="autoplay" allowfullscreen></iframe>`;
                         } else if (videoCategory === 'USVP') {
-                            // Use video player for USVP category with autoplay enabled
+                            // Use video player for USVP category
                             videoContainer.innerHTML = `
-                                <video controls autoplay muted playsinline>
+                                <video controls autoplay>
                                     <source src="${videoLink}" type="video/mp4">
                                     Your browser does not support the video tag.
                                 </video>
                             `;
                         } else {
                             videoContainer.innerHTML = `<iframe src="${videoLink}?autoplay=1" frameborder="0" allow="autoplay" allowfullscreen></iframe>`;
-                        }
-
-                        // Ensure the video plays automatically
-                        const videoElement = videoContainer.querySelector('video');
-                        if (videoElement) {
-                            videoElement.play().catch(error => {
-                                console.error('Error attempting to play video:', error);
-                            });
                         }
 
                         // Update title and description
