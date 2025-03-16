@@ -267,7 +267,7 @@ body {
   gap: 16px;
   padding: 20px;
   margin: 0;
-  background: linear-gradient(270deg, pink, lightblue, lightgreen);
+  background: linear-gradient(270deg, lightgreen, pink, lightblue, lightgreen);
 
 }
 
