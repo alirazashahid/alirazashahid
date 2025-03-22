@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -50,35 +49,37 @@
             font-weight: bold;
             color: #333;
         }
-        /* Request Form Styling */
-        .request-form {
-            margin: 50px auto;
-            padding: 20px;
-            max-width: 500px;
-            background-color: #f9f9f9;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
         }
-        .request-form h2 {
-            text-align: center;
-            color: #2f4ad0;
-            margin-bottom: 20px;
+
+        .button-container a {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            transition: background-color 0.3s;
         }
-        .request-form input, .request-form button {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+
+        .button-container a.facebook {
+            background-color: #3b5998;
         }
-        .request-form button {
-            background-color: #2f4ad0;
-            color: #fff;
-            border: none;
-            cursor: pointer;
+
+        .button-container a.facebook:hover {
+            background-color: #2d4373;
         }
-        .request-form button:hover {
-            background-color: #1c3586;
+
+        .button-container a.tiktok {
+            background-color: #010101;
+        }
+
+        .button-container a.tiktok:hover {
+            background-color: #333333;
         }
     </style>
 </head>
@@ -86,37 +87,37 @@
     <!-- Navigation bar -->
     <nav class="navbar">
         <!-- Logo -->
-         <a href="https://moviezoon.live" style="text-decoration: none;">
-    <div class="logo" title="Moviezoon">M</div>
-</a>
+        <a href="https://moviezoon.live" style="text-decoration: none;">
+            <div class="logo" title="Moviezoon">M</div>
+        </a>
         <div class="search-bar">
-    <input id="search-input" type="text" placeholder="Search...">
-    <button onclick="searchMovies()">
-        <div class="search-icon">
-            <i class="fas fa-search"></i>
+            <input id="search-input" type="text" placeholder="Search...">
+            <button onclick="searchMovies()">
+                <div class="search-icon">
+                    <i class="fas fa-search"></i>
+                </div>
+            </button>
         </div>
-    </button>
-</div>
 
-<script>
-    function searchMovies() {
-        const searchInput = document.getElementById('search-input').value.trim(); // Get the search input value
+        <script>
+            function searchMovies() {
+                const searchInput = document.getElementById('search-input').value.trim(); // Get the search input value
 
-        if (searchInput) {
-            // Redirect to search.php with the query parameter
-            window.location.href = `search.php?query=${encodeURIComponent(searchInput)}`;
-        } else {
-            alert("Please enter a search term!"); // Show an alert if the search is empty
-        }
-    }
+                if (searchInput) {
+                    // Redirect to search.php with the query parameter
+                    window.location.href = `search.php?query=${encodeURIComponent(searchInput)}`;
+                } else {
+                    alert("Please enter a search term!"); // Show an alert if the search is empty
+                }
+            }
 
-    // Trigger search when Enter key is pressed
-    document.getElementById('search-input').addEventListener('keypress', function(event) {
-        if (event.key === 'Enter') {
-            searchMovies(); // Call the searchMovies function on Enter
-        }
-    });
-</script>
+            // Trigger search when Enter key is pressed
+            document.getElementById('search-input').addEventListener('keypress', function(event) {
+                if (event.key === 'Enter') {
+                    searchMovies(); // Call the searchMovies function on Enter
+                }
+            });
+        </script>
 
         <div class="language-dropdown">
             <button class="btn" onclick="window.location.href='urdu'">Urdu</button>
@@ -126,8 +127,8 @@
             <button class="btn" onclick="window.location.href='h-dubbed'">H-Dubbed</button>
         </div>
 
- <!-- Language Dropdown for Mobile -->
- <div class="mobile-language-dropdown">
+        <!-- Language Dropdown for Mobile -->
+        <div class="mobile-language-dropdown">
             <button class="btn dropdown-toggle" onclick="toggleDropdown()">Language</button>
             <div class="dropdown-content" id="dropdown-content">
                 <a href="urdu">Urdu</a>
@@ -138,14 +139,13 @@
             </div>
         </div>
         <script>
-        function toggleDropdown() {
-            const dropdown = document.getElementById('dropdown-content');
-            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
-        }
-    </script>
+            function toggleDropdown() {
+                const dropdown = document.getElementById('dropdown-content');
+                dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+            }
+        </script>
 
         <!-- Profile Icon -->
-
         <div class="profile" onclick="goToProfile()">
             <img src="Images/pf-pic.jpg" alt="Profile Picture">
         </div>           
@@ -188,14 +188,10 @@
                         `).join('');
                     } else {
                         document.getElementById('search-results').innerHTML = `
-                            <p style="text-align: center; color: gray;">No results found. Please request the film below.</p>
-                            <div class="request-form">
-                                <h2>Request the Film</h2>
-                                <form action="request_film" method="POST">
-                                    <input type="text" name="film_name" placeholder="Film Name" required>
-                                    <input type="email" name="email" placeholder="Your Email" required>
-                                    <button type="submit">Request Film</button>
-                                </form>
+                            <p style="text-align: center; color: gray;">No results found. If you did not find the film, please contact us on Facebook or TikTok:</p>
+                            <div class="button-container">
+                                <a href="https://www.facebook.com/profile.php?id=61560299040722" class="facebook" target="_blank">Facebook Request</a>
+                                <a href="https://www.tiktok.com" class="tiktok" target="_blank">TikTok Request</a>
                             </div>
                         `;
                     }
