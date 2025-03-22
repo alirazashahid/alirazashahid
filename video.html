@@ -125,7 +125,7 @@
                 const searchInput = document.getElementById('search-input').value.trim(); // Get the search input value
 
                 if (searchInput) {
-                    // Redirect to search.php with the query parameter
+                    // Redirect to search with the query parameter
                     window.location.href = `search.html?query=${encodeURIComponent(searchInput)}`;
                 } else {
                     alert("Please enter a search term!"); // Show an alert if the search is empty
@@ -154,9 +154,9 @@
     </nav>
 
     <div class="sidebar">
-        <a href="playlist.php" title="Playlist" class="playlist-img"></a>
-        <a href="Watched.php" title="Just Watched" class="justwatched-img"></a>
-        <a href="Liked.php" title="Liked" class="liked-img"></a>
+        <a href="playlist" title="Playlist" class="playlist-img"></a>
+        <a href="Watched" title="Just Watched" class="justwatched-img"></a>
+        <a href="Liked" title="Liked" class="liked-img"></a>
     </div>
     <div class="video-container" id="video-container">
         <p>Loading video...</p>
@@ -168,7 +168,7 @@
         <p id="video-description">Loading description...</p>
         <div class="button-container">
             <p> Dear User If Video Not Playing then SMS Us on Facebook or TikTok</p>
-            <a href="https://www.facebook.com/profile.php?id=61560299040722" class="facebook" target="_blank">Facebook Request</a>
+            <a href="https://www.facebook.com/profile?id=61560299040722" class="facebook" target="_blank">Facebook Request</a>
             <a href="https://www.tiktok.com/@moviezoon.live" class="tiktok" target="_blank">TikTok Request</a>
         </div>
     </div>
