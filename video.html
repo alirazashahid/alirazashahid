@@ -55,6 +55,40 @@
             font-size: 16px;
             color: #333;
         }
+        
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .button-container a {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .button-container a.facebook {
+            background-color: #3b5998;
+        }
+
+        .button-container a.facebook:hover {
+            background-color: #2d4373;
+        }
+
+        .button-container a.tiktok {
+            background-color: #010101;
+        }
+
+        .button-container a.tiktok:hover {
+            background-color: #333333;
+        }
+
         html, body {
            overflow-x: hidden;
            max-width: 100%;
@@ -132,6 +166,10 @@
 
     <div class="description-box">
         <p id="video-description">Loading description...</p>
+        <div class="button-container">
+            <a href="https://www.facebook.com/profile.php?id=61560299040722" class="facebook" target="_blank">Facebook Request</a>
+            <a href="https://www.tiktok.com/@moviezoon.live" class="tiktok" target="_blank">TikTok Request</a>
+        </div>
     </div>
 
     <script>
