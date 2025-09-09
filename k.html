@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Roja, be mine 💖</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&family=Great+Vibes&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg1:#1a0b13;
+    --bg2:#2a0f1e;
+    --accent:#ff2e6a;
+    --accent2:#ff7aa8;
+    --soft:#ffd3e1;
+    --glow:#ff3b75;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    background: radial-gradient(1200px 600px at 70% -10%, #3b1228 0%, transparent 60%),
+                radial-gradient(900px 700px at 0% 100%, #1b0a14 0%, transparent 60%),
+                linear-gradient(180deg,var(--bg1),var(--bg2));
+    color:#fff;
+    font-family:Poppins,system-ui,-apple-system,Segoe UI,Roboto,Arial,Helvetica,sans-serif;
+    overflow-x:hidden;
+  }
+
+  /* floating soft particles */
+  .stars{
+    position:fixed; inset:0; pointer-events:none; z-index:0;
+    background:
+      radial-gradient(2px 2px at 20% 30%, #ffffff80 0 40%, transparent 41%),
+      radial-gradient(2px 2px at 60% 10%, #ffffff60 0 40%, transparent 41%),
+      radial-gradient(2px 2px at 80% 70%, #ffffff50 0 40%, transparent 41%),
+      radial-gradient(2px 2px at 35% 80%, #ffffff70 0 40%, transparent 41%),
+      radial-gradient(1.5px 1.5px at 10% 60%, #ffffff60 0 40%, transparent 41%),
+      radial-gradient(1.5px 1.5px at 90% 40%, #ffffff60 0 40%, transparent 41%);
+    opacity:.35;
+    animation: twinkle 6s linear infinite;
+  }
+  @keyframes twinkle{50%{opacity:.6}}
+
+  .wrap{
+    position:relative; z-index:1;
+    min-height:100%;
+    display:grid; place-items:center;
+    padding:28px;
+  }
+  .card{
+    width:min(920px,95vw);
+    padding:36px 28px 40px;
+    border-radius:28px;
+    backdrop-filter: blur(10px);
+    background: linear-gradient(180deg,#ffffff10,#ffffff08);
+    border:1px solid #ffffff20;
+    box-shadow:0 20px 60px #00000070, 0 0 60px #ff2e6a20 inset;
+    text-align:center;
+  }
+
+  .heading{
+    display:flex; gap:14px; align-items:center; justify-content:center;
+    flex-wrap:wrap; margin-bottom:8px;
+  }
+  .title{
+    font-family:"Great Vibes", cursive;
+    font-size: clamp(38px, 6vw, 72px);
+    line-height:1; letter-spacing: .5px;
+    background: linear-gradient(90deg, #fff, var(--soft));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    text-shadow: 0 2px 30px #ffffff20;
+  }
+  .subtitle{
+    font-weight:600; opacity:.9; margin-top:4px;
+  }
+
+  /* big animated heart */
+  .heart-hero{
+    margin:26px auto 18px; width:180px; height:160px; position:relative;
+    filter: drop-shadow(0 0 20px #ff2e6a60) drop-shadow(0 0 50px #ff2e6a30);
+    animation: float 3.5s ease-in-out infinite;
+  }
+  @keyframes float{50%{transform: translateY(-10px) scale(1.02)}}
+  .heart{
+    width:100px; height:100px; background: radial-gradient(circle at 30% 30%, #ff8fb1, #ff2e6a 60%, #b4003a 100%);
+    position:absolute; left:50%; top:30%; transform: translate(-50%,-50%) rotate(-45deg);
+    border-radius:20px;
+    box-shadow: inset 0 -10px 30px #b4003a99, 0 20px 50px #ff2e6a50;
+  }
+  .heart::before, .heart::after{
+    content:""; position:absolute; width:100px; height:100px; background:inherit; border-radius:50%;
+    box-shadow: inherit;
+  }
+  .heart::before{ top:-50px; left:0}
+  .heart::after{ left:50px; top:0}
+
+  .glow-ring{
+    position:absolute; inset:0; border-radius:50%;
+    background: radial-gradient(closest-side, #ff3b7570, transparent 70%);
+    filter: blur(10px); opacity:.7; mix-blend-mode:screen;
+  }
+
+  .message{
+    margin: 12px auto 24px;
+    font-size: clamp(18px, 2.2vw, 24px);
+    max-width:780px;
+  }
+  .script{
+    font-family:"Great Vibes", cursive;
+    font-size: clamp(30px, 4.8vw, 60px);
+    margin: 12px auto 0;
+    background: linear-gradient(90deg, #fff, #ffd6e6);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    text-shadow: 0 0 28px #ff2e6a30;
+  }
+
+  /* call-to-action */
+  .actions{margin-top:22px; display:flex; gap:12px; justify-content:center; flex-wrap:wrap}
+  .btn{
+    cursor:pointer; border:none; padding:14px 22px; border-radius:14px; font-weight:700;
+    letter-spacing:.3px; transition:.25s transform, .25s box-shadow, .25s background;
+  }
+  .btn-primary{
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color:#fff;
+    box-shadow: 0 10px 30px #ff2e6a55, inset 0 -6px 12px #b4003a66;
+  }
+  .btn-primary:hover{ transform: translateY(-2px) scale(1.03)}
+  .btn-ghost{
+    background:#ffffff14; color:#fff; border:1px solid #ffffff33;
+    box-shadow: 0 8px 24px #00000040;
+  }
+  .btn-ghost:hover{ transform: translateY(-2px)}
+
+  /* footer note */
+  .note{
+    margin-top:18px; opacity:.8; font-size:.95rem
+  }
+
+  /* falling hearts */
+  .float-heart{
+    position: fixed; top:-30px; font-size:22px; user-select:none; pointer-events:none;
+    animation: fall 6.5s linear forwards;
+    filter: drop-shadow(0 4px 6px #00000060);
+  }
+  @keyframes fall{
+    0%{transform: translateY(-40px) rotate(0deg); opacity:0}
+    10%{opacity:1}
+    100%{transform: translateY(110vh) rotate(360deg); opacity:0}
+  }
+
+  /* modal */
+  .modal{
+    position:fixed; inset:0; display:none; place-items:center; z-index:30;
+    background: radial-gradient(600px 300px at 50% 20%, #2d0f20dd, #000000aa);
+    backdrop-filter: blur(4px);
+  }
+  .modal.open{display:grid}
+  .modal-card{
+    width:min(640px, 92vw);
+    padding:28px 26px 30px;
+    border-radius:24px;
+    background: linear-gradient(180deg,#3a1122,#240b17 70%);
+    border:1px solid #ffffff22;
+    box-shadow: 0 20px 60px #00000080, 0 0 80px #ff2e6a30 inset;
+    text-align:center;
+  }
+  .modal h3{
+    margin:8px 0 8px; font-size: clamp(26px, 3.2vw, 34px);
+    letter-spacing:.3px;
+  }
+  .modal p{opacity:.9; margin: 6px auto 16px; max-width:520px}
+  .modal .script{margin-top:6px}
+  .modal .modal-actions{margin-top:16px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap}
+  .tag{
+    margin-top:10px; display:inline-block; padding:8px 12px; border-radius:999px;
+    background:#ffffff12; border:1px solid #ffffff26; font-size:.9rem; opacity:.9
+  }
+
+  /* small heart divider */
+  .divider{
+    width:100%; display:flex; align-items:center; justify-content:center; gap:10px; margin:22px 0 8px;
+    opacity:.9
+  }
+  .divider .dot{width:6px; height:6px; border-radius:999px; background:#ffffff50}
+  .divider .mini-heart{font-size:18px; filter: drop-shadow(0 2px 6px #ff2e6a90)}
+</style>
+</head>
+<body>
+
+<div class="stars"></div>
+
+<div class="wrap">
+  <div class="card">
+
+    <div class="heading">
+      <span class="title">Roja,</span>
+      <span class="title">will you be mine?</span>
+    </div>
+    <div class="subtitle">A small page from my heart to yours 💌</div>
+
+    <div class="heart-hero" aria-hidden="true">
+      <div class="glow-ring"></div>
+      <div class="heart"></div>
+    </div>
+
+    <div class="script">“i love you meri jaan Roja”</div>
+
+    <p class="message">
+      You’re my favorite hello and the hardest goodbye. If love is a journey, I only want to walk it
+      with you. Every day, every moment, <strong>it’s you</strong>.
+    </p>
+
+    <div class="divider">
+      <span class="dot"></span><span class="mini-heart">💗</span><span class="dot"></span>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-primary" id="btnPropose">Propose Now</button>
+      <button class="btn btn-ghost" id="btnHearts">Shower Hearts</button>
+    </div>
+
+    <div class="note">Tip: tap/click anywhere to release more hearts ✨</div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal" id="loveModal" role="dialog" aria-modal="true" aria-labelledby="loveTitle">
+  <div class="modal-card">
+    <div class="heart-hero" style="margin:10px auto 6px; transform:none; animation:none;">
+      <div class="heart"></div>
+    </div>
+    <h3 id="loveTitle">From my heart to yours</h3>
+    <p class="script">i love you meri jaan Roja</p>
+    <p>
+      Will you hold my hand through every sunset and every sunrise?  
+      <strong>Say yes, and let’s write our story.</strong>
+    </p>
+    <div class="modal-actions">
+      <button class="btn btn-primary" id="btnYes">Yes, forever 💍</button>
+      <button class="btn btn-ghost" id="btnClose">Awww, close</button>
+    </div>
+    <div class="tag">Made with ❤️ just for you</div>
+  </div>
+</div>
+
+<script>
+  // utility to drop a floating heart at x position
+  function dropHeart(x = Math.random() * window.innerWidth, emoji = null){
+    const h = document.createElement('div');
+    h.className = 'float-heart';
+    h.textContent = emoji || (Math.random() < .6 ? '💖' : (Math.random() < .5 ? '💗' : '💓'));
+    h.style.left = (x - 10) + 'px';
+    h.style.rotate = (Math.random()*40-20) + 'deg';
+    h.style.animationDuration = (5 + Math.random()*3) + 's';
+    document.body.appendChild(h);
+    setTimeout(() => h.remove(), 8000);
+  }
+
+  // gentle burst of hearts
+  function burstHearts(centerX){
+    const n = 18;
+    for(let i=0;i<n;i++){
+      setTimeout(()=>dropHeart(centerX + (Math.random()*220-110)), i*60);
+    }
+  }
+
+  // ambient hearts every few seconds
+  let ambient = setInterval(() => dropHeart(), 2500);
+
+  // click to spawn hearts
+  window.addEventListener('click', (e)=>{
+    if(!e.target.closest('.btn')) dropHeart(e.clientX);
+  });
+
+  // buttons
+  const btnHearts = document.getElementById('btnHearts');
+  const btnPropose = document.getElementById('btnPropose');
+  const modal = document.getElementById('loveModal');
+  const btnClose = document.getElementById('btnClose');
+  const btnYes = document.getElementById('btnYes');
+
+  btnHearts.addEventListener('click', (e)=>{
+    burstHearts(window.innerWidth/2);
+  });
+
+  btnPropose.addEventListener('click', ()=>{
+    modal.classList.add('open');
+    burstHearts(window.innerWidth/2);
+  });
+
+  btnClose.addEventListener('click', ()=> modal.classList.remove('open'));
+  modal.addEventListener('click', (e)=>{ if(e.target === modal) modal.classList.remove('open'); });
+
+  btnYes.addEventListener('click', ()=>{
+    burstHearts(window.innerWidth/2);
+    // cute ripple of hearts
+    for(let i=0;i<5;i++){
+      setTimeout(()=>burstHearts(window.innerWidth/2), i*260);
+    }
+  });
+
+  // Accessibility: open with Enter on focused button
+  document.addEventListener('keydown', (e)=>{
+    if(e.key === 'Enter' && document.activeElement === btnPropose){ modal.classList.add('open'); }
+    if(e.key === 'Escape'){ modal.classList.remove('open'); }
+  });
+</script>
+</body>
+</html>
